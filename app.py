@@ -22,7 +22,6 @@ session.headers.update(headers)
 currency_name = []
 currency_price = []
 
-
 try:
     response = session.get(url, params=parameters)
     data = json.loads(response.text)
@@ -36,6 +35,7 @@ except (ConnectionError, Timeout, TooManyRedirects) as e:
 
 crypto_dict = dict(zip(currency_name, currency_price))
 print(crypto_dict)
+
 
 @app.route('/')
 def index():
