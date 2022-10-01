@@ -1,1 +1,2 @@
 # CryptoCurrencyWeb
+Версия для браузера
