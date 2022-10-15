@@ -2,6 +2,8 @@ from flask import Flask, render_template
 from requests import Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 import json
+import api_key as ak
+
 
 app = Flask(__name__)
 
@@ -13,7 +15,7 @@ parameters = {
 }
 headers = {
     'Accepts': 'application/json',
-    'X-CMC_PRO_API_KEY': '441243ec-3147-47a0-9806-9d68d6971816',
+    'X-CMC_PRO_API_KEY': ak.api_key,
 }
 
 session = Session()

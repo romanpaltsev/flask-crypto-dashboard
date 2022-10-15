@@ -1,2 +1,2 @@
 # CryptoCurrencyWeb
-Версия для браузера
+Version for Browser
