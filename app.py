@@ -7,15 +7,16 @@ import api_key as ak
 
 app = Flask(__name__)
 
-url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
+url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest"
+
 parameters = {
-    'start': '1',
-    'limit': '10',
-    'convert': 'USD'
+    "start": "1",
+    "limit": "50",
+    "convert": "USD"
 }
 headers = {
-    'Accepts': 'application/json',
-    'X-CMC_PRO_API_KEY': ak.api_key,
+    "Accepts": "application/json",
+    "X-CMC_PRO_API_KEY": ak.api_key,
 }
 
 session = Session()
@@ -27,10 +28,10 @@ currency_price = []
 try:
     response = session.get(url, params=parameters)
     data = json.loads(response.text)
-    for i in range(0, 10):
-        crypto_name = data['data'][i]['name']
+    for i in range(0, int(parameters["limit"])):
+        crypto_name = data["data"][i]["name"]
         currency_name.append(crypto_name)
-        crypto_price = round(data['data'][i]['quote']['USD']['price'], 4)
+        crypto_price = round(data["data"][i]["quote"]["USD"]["price"], 4)
         currency_price.append(crypto_price)
 except (ConnectionError, Timeout, TooManyRedirects) as e:
     print(e)
@@ -38,11 +39,10 @@ except (ConnectionError, Timeout, TooManyRedirects) as e:
 crypto_dict = dict(zip(currency_name, currency_price))
 print(crypto_dict)
 
-
-@app.route('/')
+@app.route("/")
 def index():
-    return render_template('index.html', crypto_dict=crypto_dict)
+    return render_template("index.html", crypto_dict=crypto_dict)
 
 
-if __name__ == '__main__':
-    app.run()
+if __name__ == "__main__":
+    app.run(debug=True)
